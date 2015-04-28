@@ -7,10 +7,26 @@ package Dist::Zilla::Plugin::Test::Pod::No404s;
 
 use Moose;
 extends 'Dist::Zilla::Plugin::InlineFiles';
+with 'Dist::Zilla::Role::PrereqSource';
+
+use namespace::autoclean;
+
+sub register_prereqs
+{
+  my $self = shift;
+
+  $self->zilla->register_prereqs(
+    {
+      type  => 'requires',
+      phase => 'develop',
+    },
+    'Test::Pod::No404s' => '0.01',
+    'Test::More'        => '0',
+  )
+}
+
 
 __PACKAGE__->meta->make_immutable;
-no Moose;
-
 1;
 
 =head1 SYNOPSIS
