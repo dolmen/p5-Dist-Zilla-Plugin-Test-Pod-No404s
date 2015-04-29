@@ -77,10 +77,6 @@ foreach my $env_skip ( qw(
     if $ENV{$env_skip};
 }
 
-eval "use Test::Pod::No404s";
-if ( $@ ) {
-  plan skip_all => 'Test::Pod::No404s required for testing POD';
-}
-else {
-  all_pod_files_ok();
-}
+require Test::Pod::No404s;
+Test::Pod::No404s::->import('all_pod_files_ok');
+all_pod_files_ok();
